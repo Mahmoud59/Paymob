@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'analytics-index' %}">Home</a><br>
+    <div>Upload file</div>
+    <br>
+    <form method="post" action="{% url 'analytics-upload' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="analytics_file">
+        <input type="submit" value="Upload File">
+    </form>
+    <br>    <br>
+    <br>
+
+    <div>Please select the word</div>
+    <br>
+    <form method="post" action="{% url 'analytics-similar' %}">
+        {% csrf_token %}
+        <select name="csv_key">
+            {% for analytics_row in analytics_data %}
+                <option value="{{ analytics_row.key }}">{{ analytics_row.key }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit Value">
+    </form>
+
+    <br>    <br>
+    <br>
+
+    <div>Similar Data</div>
+    <br>
+
+    <table style="width:100%" class="table table-dark">
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th>Matching Percentage</th>
+        </tr>
+        {% for row in analytics_similar_data %}
+        <tr>
+          <th> {{ original_key }}</th>
+          <th> {{ row.value }}</th>
+          <th> {{ row.percentage }} % </th>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

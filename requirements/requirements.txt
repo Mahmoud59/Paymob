@@ -1,0 +1,25 @@
+# App specific
+Django==4.0.3
+django-cors-headers==3.11.0
+django-environ==0.8.1
+django-extensions==3.1.5
+django-filter==21.1
+dry-rest-permissions==0.1.10
+djangorestframework==3.13.1
+drf-writable-nested==0.6.3
+
+# DOCS
+django-rest-swagger==2.2.0
+drf-yasg==1.20.0
+
+# Inspect
+django-queryinspect==1.1.0
+
+# Database
+psycopg2-binary==2.9.3
+
+# Python Specific
+requests==2.27.1
+
+# Deployment
+uWSGI==2.0.20

@@ -1,0 +1,12 @@
+# Linting
+flake8==4.0.1
+isort==5.10.1
+
+# Shell
+ipdb==0.13.9
+ipython==8.2.0
+
+# Testing
+pytest==7.1.1
+pytest-django==4.5.2
+freezegun==1.2.1
