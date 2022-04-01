@@ -4,7 +4,7 @@ To run project:
 
 1 - Clone project from GitHub 
     
-    git clone https://github.com/Mahmoud59/paymob
+    git clone https://github.com/Mahmoud59/Paymob.git
 
 2 - In project directory beside requirements directory, 
     create a virtual environment by 
