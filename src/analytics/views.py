@@ -51,26 +51,31 @@ def similar(request):
     analysis_data = Analysis.objects.exclude(pk=analysis_value.pk)
     repeated_data = []
     not_repeated_data = {}
+    # Split the value to list of words to search in DB
     value_words = analysis_value.value.split()
     analysis_value_len = len(value_words)
 
     for word in value_words:
+        # Get all rows have this word
         analysis_has_word = analysis_data.filter(value__icontains=word)
+
+        # Make a list with each row id and its percentage [ 2, 25 ] and
         for row in analysis_has_word:
             if row.pk in not_repeated_data.keys():
-                not_repeated_data[row.pk] += 1
+                not_repeated_data[row.pk][0] += 1
+                not_repeated_data[row.pk][1] = 100 * (
+                        not_repeated_data[row.pk][0] / analysis_value_len)
             else:
-                not_repeated_data[row.pk] = 1
+                not_repeated_data[row.pk] = [1]
+                not_repeated_data[row.pk].append(100 * (
+                        not_repeated_data[row.pk][0] / analysis_value_len))
 
         repeated_data.extend(analysis_has_word)
 
-    for key, value in not_repeated_data.items():
-        not_repeated_data[key] = 100 * (
-                not_repeated_data[key] / analysis_value_len)
-
+    # Remove duplicate rows and add it percentage
     analysis_has_key = list(set(repeated_data))
     for new_row in analysis_has_key:
-        new_row.percentage = not_repeated_data[new_row.pk]
+        new_row.percentage = not_repeated_data[new_row.pk][1]
 
     return render(request, 'analytics/index.html',
                   {'original_key': analysis_value.key,
